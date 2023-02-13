@@ -1,1 +1,73 @@
-https://replit.com/@CamilaAnacleto/hashTable#main.cpp
+Replit link: https://replit.com/@CamilaAnacleto/hashTable#main.cpp
+
+Code replicated below in case something happens to the link:
+
+#include <iostream>
+#include <unordered_map>
+
+class TabelaHash {
+private:
+  std::unordered_map<std::string, std::string> tabela; // Tabela hash
+
+public:
+  // Adiciona uma entrada na tabela hash:
+  void adicionar(const std::string &IMEI, const std::string &nomeUsuario) {
+
+    // Tratar colisão (se já existir uma entrada com o mesmo IMEI)
+    if (tabela.count(IMEI)) {
+      std::cout
+          << "IMEI já está em uso. Não foi possível adicionar novo registro.\n";
+      return;
+    }
+    tabela[IMEI] = nomeUsuario;
+  }
+
+  // Obtém o nome de usuário associado a um determinado IMEI
+  std::string obterNomeUsuario(const std::string &IMEI) {
+    if (tabela.count(IMEI))
+      return tabela[IMEI];
+    else
+      return "IMEI não encontrado.";
+  }
+
+  // Remove uma entrada da tabela hash
+  void remover(const std::string &IMEI) {
+    if (tabela.count(IMEI))
+      tabela.erase(IMEI);
+    else
+      std::cout << "IMEI não encontrado. Não foi possível remover registro.\n";
+  }
+};
+
+int main() {
+  TabelaHash tabelaHash;
+
+  // Adicionar registros na tabela hash
+  tabelaHash.adicionar("1234567890", "usuario1");
+  tabelaHash.adicionar("0987654321", "usuario2");
+  tabelaHash.adicionar("1111111111", "usuario3");
+
+  // Caso de teste 1: Obter nome de usuário associado a um IMEI
+  std::cout << "Usuário associado ao IMEI 1234567890: "
+            << tabelaHash.obterNomeUsuario("1234567890") << std::endl;
+
+  // Caso de teste 2: Tentar adicionar um registro com um IMEI já existente
+  tabelaHash.adicionar("1234567890", "usuario4");
+
+  // Caso de teste 3: Remover um registro
+  tabelaHash.remover("0987654321");
+
+  // Caso de teste 4: Tentar obter o nome de usuário associado a um IMEI que foi
+  // removido
+  std::cout << "Usuário associado ao IMEI 0987654321: "
+            << tabelaHash.obterNomeUsuario("0987654321") << std::endl;
+
+  // Caso de teste 5: Tentar remover um registro que não existe na tabela hash
+  tabelaHash.remover("0000000000");
+
+  return 0;
+}
+
+
+
+
